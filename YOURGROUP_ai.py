@@ -16,7 +16,7 @@ import time
 from othello_shared import find_lines, get_possible_moves, get_score, play_move
 
 def compute_utility(board, color):
-    utility = 0;
+    utility = 0
     if color == 1:
         utility = get_score(board)[0] - get_score[1]
     else: 

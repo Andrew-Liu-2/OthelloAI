@@ -19,6 +19,8 @@ from othello_shared import find_lines, get_possible_moves, get_score, play_move
 # The utility is the number of disks of player color minus the number of disks of the opponent. 
 # Hint: The function get_score(board) returns a tuple (number of dark disks, number of light disks).
 
+
+# 1 is dark 2 is light
 def compute_utility(board, color): 
     utility = 0
     if color == 1:
@@ -32,12 +34,28 @@ def compute_utility(board, color):
 ############ MINIMAX ###############################
 
 def minimax_min_node(board, color):
+    moves = get_possible_moves(board, color)
     opp_color = 1 if color == 2 else 2
-     
-    return None
+
+    tuples = []
+    for move in moves:
+        column = move[0] # i value
+        row = move[1] # j value
+
+        boardAfterMove = play_move(board,color,column,row)
+        moveUtility = compute_utility(boardAfterMove,opp_color)
+        tuples.append(moveUtility,move)
+
+        # calculate the ultility of each possbile move
+        # add a tuple of ultility:move
+
+    tuples.sort()
+
+    return tuples[0][1]
 
 
 def minimax_max_node(board, color):
+    moves = get_possible_moves(board, color)
     return None 
 
     
@@ -48,7 +66,7 @@ def select_move_minimax(board, color):
     i is the column and j is the row on the board.  
     """
     return 0,0
-     
+
 ############ ALPHA-BETA PRUNING #####################
 
 #alphabeta_min_node(board, color, alpha, beta, level, limit)

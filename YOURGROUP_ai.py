@@ -15,7 +15,11 @@ import time
 # You can use the functions in othello_shared to write your AI 
 from othello_shared import find_lines, get_possible_moves, get_score, play_move
 
-def compute_utility(board, color):
+# computes the utility of a final game board state (in the format described above). 
+# The utility is the number of disks of player color minus the number of disks of the opponent. 
+# Hint: The function get_score(board) returns a tuple (number of dark disks, number of light disks).
+
+def compute_utility(board, color): 
     utility = 0
     if color == 1:
         utility = get_score(board)[0] - get_score[1]

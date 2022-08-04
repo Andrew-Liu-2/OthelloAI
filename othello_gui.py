@@ -6,6 +6,7 @@ Graphical use interface for th Othello game.
 
 from tkinter import *
 from tkinter import scrolledtext
+import sys
 
 from othello_game import OthelloGameManager, AiPlayerInterface, Player, InvalidMoveError, AiTimeoutError
 from othello_shared import get_possible_moves, get_score

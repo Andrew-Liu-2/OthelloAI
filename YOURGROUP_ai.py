@@ -49,6 +49,11 @@ def select_move_minimax(board, color):
     """
     return 0,0 
     
+def minimax_max_node(board,color):
+    return
+
+def minimax_min_node(board,color):
+    return
 ############ ALPHA-BETA PRUNING #####################
 
 #alphabeta_min_node(board, color, alpha, beta, level, limit)

@@ -81,7 +81,7 @@ def select_move_minimax(board, color):
             if (compute_utility(play_move(board, color, element[0], element[1]), color) > previousUtility):
                 previousUtility = compute_utility(play_move(board, color, element[0], element[1]), color);
                 maxElement = (element[0], element[1])
-        return maxElement;
+        return maxElement
     elif (True): #IMPL min node and max nodes
         return 0,0
     return 0,0 

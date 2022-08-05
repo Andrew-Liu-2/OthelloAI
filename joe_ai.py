@@ -79,10 +79,11 @@ def select_move_minimax(board, color):
                  previousUtility = compute_utility(play_move(board, color, element[0], element[1]), color)                 
                  GLOBAL_MAX_MOVE = (element[0], element[1])
     else:
+        min_node = minimax_min_node(boardAfterMove, color)
         for moves in get_possible_moves(board,color):
             boardAfterMove = play_move(board,color,moves[0],moves[1])
-            if(minimax_min_node(boardAfterMove, color) > GLOBAL_MAX):                
-                GLOBAL_MAX = minimax_min_node(boardAfterMove,color)
+            if(min_node > GLOBAL_MAX):                
+                GLOBAL_MAX = min_node
                 GLOBAL_MAX_MOVE = moves
 
     print("now playing", GLOBAL_MAX_MOVE, file = sys.stderr)

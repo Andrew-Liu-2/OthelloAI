@@ -70,26 +70,19 @@ def minimax_max_node(board, color):
 def select_move_minimax(board, color):
     GLOBAL_MAX = 0
     GLOBAL_MAX_MOVE = (0,0)
-    for moves in get_possible_moves(board,color):
-        boardAfterMove = play_move(board,color,moves[0],moves[1])
-        if(minimax_min_node(boardAfterMove, color) > GLOBAL_MAX):
-            GLOBAL_MAX = minimax_min_node(boardAfterMove,color)
-            GLOBAL_MAX_MOVE = moves
+    cornerMoves = getCornerMoves(board, color)
+    if len(cornerMoves != 0):
+         for element in cornerMoves:
+             if (compute_utility(play_move(board, color, element[0], element[1]), color) > previousUtility):
+                 previousUtility = compute_utility(play_move(board, color, element[0], element[1]), color)
+                 GLOBAL_MAX_MOVE = (element[0], element[1])
+    else:
+        for moves in get_possible_moves(board,color):
+            boardAfterMove = play_move(board,color,moves[0],moves[1])
+            if(minimax_min_node(boardAfterMove, color) > GLOBAL_MAX):
+                GLOBAL_MAX = minimax_min_node(boardAfterMove,color)
+                GLOBAL_MAX_MOVE = moves
     return GLOBAL_MAX_MOVE
-
-    # move = []
-    # previousUtility = 0
-    # maxElement = []
-    # cornerMoves = getCornerMoves(board, color)
-    # if len(cornerMoves != 0):
-    #     for element in cornerMoves:
-    #         if (compute_utility(play_move(board, color, element[0], element[1]), color) > previousUtility):
-    #             previousUtility = compute_utility(play_move(board, color, element[0], element[1]), color)
-    #             maxElement = (element[0], element[1])
-    #     return maxElement
-    # elif (True): #IMPL min node and max nodes
-    #     return 0,0
-    # return 0,0 
 
 
 def getCornerMoves(board, color):
@@ -98,14 +91,13 @@ def getCornerMoves(board, color):
     for element in possibleMoves:
         if (element[0] == 0 and element[1] == 0):
             cornerMoves.append(element)
-        elif (element[0] == 0 and element[1] == 7):
+        elif (element[0] == 0 and element[1] == 3):
             cornerMoves.append(element)
-        elif (element[0] == 7 and element[1] == 7):
+        elif (element[0] == 3 and element[1] == 3):
             cornerMoves.append(element)
-        elif (element[0] == 7 and element[1] == 0):
+        elif (element[0] == 3 and element[1] == 0):
             cornerMoves.append(element) 
     return cornerMoves   
-
 ############ ALPHA-BETA PRUNING #####################
 
 #alphabeta_min_node(board, color, alpha, beta, level, limit)

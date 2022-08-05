@@ -80,11 +80,11 @@ def select_move_minimax(board, color):
     return 0,0
 
 def getCornerMoves(board, color):
-    possibleMoves = get_possible_moves(board, color);
+    possibleMoves = get_possible_moves(board, color)
     cornerMoves = []
     for element in possibleMoves:
         if (element[0] == 0 and element[1] == 0):
-            cornerMoves.append(element);
+            cornerMoves.append(element)
         elif (element[0] == 0 and element[1] == 7):
             cornerMoves.append(element)
         elif (element[0] == 7 and element[1] == 7):

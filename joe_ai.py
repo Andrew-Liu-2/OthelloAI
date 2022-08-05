@@ -36,31 +36,33 @@ def compute_utility(board, color):
 
 ############ MINIMAX ###############################
 
-def minimax_min_node(board, color):
-    opp_color = 1 if color == 2 else 2
+def minimax_min_node(board, level, limit, color):
+    level += 1
+    opp_color = 1 if color == 2 else 2 #We gotta change this ill explain later
     color = opp_color
-    if (len(get_possible_moves(board,color)) == 0):
+    if (len(get_possible_moves(board,color)) == 0) or (level == limit):
         return compute_utility(board,color)
     else:
         possibleMoves = get_possible_moves(board,color)
         possibleMin = [] 
         for moves in possibleMoves:
             boardAfterMove = play_move(board,color,moves[0],moves[1])
-            possibleMin.append(minimax_max_node(boardAfterMove,color))
+            possibleMin.append(minimax_max_node(boardAfterMove, level, limit, color))
         possibleMin.sort()
         return possibleMin[0]
 
 
-def minimax_max_node(board, color):
+def minimax_max_node(board,level,limit, color):
+    level += 1
     opp_color = 1 if color == 2 else 2
-    if (len(get_possible_moves(board,color)) == 0):
+    if (len(get_possible_moves(board,color)) == 0) or (level == limit):
         return compute_utility(board,color)
     else:
         possibleMoves = get_possible_moves(board,color)
         possibleMax = [] 
         for moves in possibleMoves:
             boardAfterMove = play_move(board,color,moves[0],moves[1])
-            possibleMax.append(minimax_min_node(boardAfterMove,color))
+            possibleMax.append(minimax_min_node(boardAfterMove, level, limit, color))
         possibleMax.sort()
         return possibleMax[-1]
 
@@ -72,7 +74,9 @@ def select_move_minimax(board, color):
     GLOBAL_MAX = -math.inf
     GLOBAL_MAX_MOVE = (0,0)
     cornerMoves = getCornerMoves(board, color)
-    previousUtility = -math.inf;
+    previousUtility = -math.inf
+    level = 0
+    limit = 4 #How many moves ahead will the AI think? (A higher value makes better choices but slower time)
     if len(cornerMoves) != 0:
          for element in cornerMoves:
              if (compute_utility(play_move(board, color, element[0], element[1]), color) > previousUtility):
@@ -81,7 +85,7 @@ def select_move_minimax(board, color):
     else:
         for moves in get_possible_moves(board,color):
             boardAfterMove = play_move(board,color,moves[0],moves[1])
-            min_node = minimax_min_node(boardAfterMove, color)
+            min_node = minimax_min_node(boardAfterMove, level, limit, color)
             if(min_node > GLOBAL_MAX):                
                 GLOBAL_MAX = min_node
                 GLOBAL_MAX_MOVE = moves

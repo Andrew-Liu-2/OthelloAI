@@ -13,7 +13,7 @@ import sys
 import time
 
 # You can use the functions in othello_shared to write your AI 
-from othello_shared import find_lines, get_possible_moves
+from othello_shared import get_possible_moves
 
 
 def select_move(board, color):

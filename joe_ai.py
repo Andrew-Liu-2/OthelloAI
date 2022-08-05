@@ -8,9 +8,7 @@ complete.
 @author: Alberto Pabon UNI: alp2247 
 """
 
-
 import sys
-import time
 import math
 
 # You can use the functions in othello_shared to write your AI 

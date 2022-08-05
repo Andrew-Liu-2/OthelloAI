@@ -71,7 +71,7 @@ def select_move_minimax(board, color):
     GLOBAL_MAX = 0
     GLOBAL_MAX_MOVE = (0,0)
     cornerMoves = getCornerMoves(board, color)
-    if len(cornerMoves != 0):
+    if len(cornerMoves) != 0:
          for element in cornerMoves:
              if (compute_utility(play_move(board, color, element[0], element[1]), color) > previousUtility):
                  previousUtility = compute_utility(play_move(board, color, element[0], element[1]), color)

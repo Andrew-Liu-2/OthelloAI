@@ -34,57 +34,59 @@ def compute_utility(board, color):
 ############ MINIMAX ###############################
 
 def minimax_min_node(board, color):
-    moves = get_possible_moves(board, color)
     opp_color = 1 if color == 2 else 2
-
-    tuples = []
-    for move in moves:
-        column = move[0] # i value
-        row = move[1] # j value
-
-        boardAfterMove = play_move(board,color,column,row)
-        moveUtility = compute_utility(boardAfterMove,opp_color)
-        tuples.append((moveUtility,move))
-
-        # calculate the ultility of each possbile move
-        # add a tuple of ultility:move
-
-    tuples.sort()
-
-    return tuples[0][1]
+    if (len(get_possible_moves(board,color)) == 0):
+        return compute_utility(board,color)
+    else:
+        possibleMoves = get_possible_moves(board,color)
+        possibleMin = [] 
+        for moves in possibleMoves:
+            boardAfterMove = play_move(board,color,moves[0],moves[1])
+            possibleMin.append(minimax_max_node(boardAfterMove,opp_color))
+        possibleMin.sort()
+        return possibleMin[0]
 
 
 def minimax_max_node(board, color):
-    moves = get_possible_moves(board, color)
-    
-    tuples = []
-    for move in moves:
-        column = move[0]
-        row = move[1]
+    opp_color = 1 if color == 2 else 2
+    if (len(get_possible_moves(board,color)) == 0):
+        return compute_utility(board,color)
+    else:
+        possibleMoves = get_possible_moves(board,color)
+        possibleMax = [] 
+        for moves in possibleMoves:
+            boardAfterMove = play_move(board,color,moves[0],moves[1])
+            possibleMax.append(minimax_min_node(boardAfterMove,opp_color))
+        possibleMax.sort()
+        return possibleMax[-1]
 
-        boardAfterMove = play_move(board,color,column,row)
-        moveUtility = compute_utility(boardAfterMove,color)
-        tuples.append((moveUtility,move))
-
-    tuples.sort()
-
-    return tuples[-1][1] 
+        
+        
 
     
 def select_move_minimax(board, color):
-    move = []
-    previousUtility = 0
-    maxElement = []
-    cornerMoves = getCornerMoves(board, color)
-    if len(cornerMoves != 0):
-        for element in cornerMoves:
-            if (compute_utility(play_move(board, color, element[0], element[1]), color) > previousUtility):
-                previousUtility = compute_utility(play_move(board, color, element[0], element[1]), color)
-                maxElement = (element[0], element[1])
-        return maxElement
-    elif (True): #IMPL min node and max nodes
-        return 0,0
-    return 0,0 
+    GLOBAL_MAX = 0
+    GLOBAL_MAX_MOVE = (0,0)
+    for moves in get_possible_moves(board,color):
+        boardAfterMove = play_move(board,color,moves[0],moves[1])
+        if(minimax_min_node(boardAfterMove, color) > GLOBAL_MAX):
+            GLOBAL_MAX = minimax_min_node(boardAfterMove,color)
+            GLOBAL_MAX_MOVE = moves
+    return GLOBAL_MAX_MOVE
+
+    # move = []
+    # previousUtility = 0
+    # maxElement = []
+    # cornerMoves = getCornerMoves(board, color)
+    # if len(cornerMoves != 0):
+    #     for element in cornerMoves:
+    #         if (compute_utility(play_move(board, color, element[0], element[1]), color) > previousUtility):
+    #             previousUtility = compute_utility(play_move(board, color, element[0], element[1]), color)
+    #             maxElement = (element[0], element[1])
+    #     return maxElement
+    # elif (True): #IMPL min node and max nodes
+    #     return 0,0
+    # return 0,0 
 
 
 def getCornerMoves(board, color):

@@ -11,6 +11,7 @@ complete.
 import random
 import sys
 import time
+import math
 
 # You can use the functions in othello_shared to write your AI 
 from othello_shared import find_lines, get_possible_moves, get_score, play_move
@@ -68,21 +69,23 @@ def minimax_max_node(board, color):
 
     
 def select_move_minimax(board, color):
-    GLOBAL_MAX = 0
+    GLOBAL_MAX = -math.inf
     GLOBAL_MAX_MOVE = (0,0)
     cornerMoves = getCornerMoves(board, color)
-    previousUtility = 0;
+    previousUtility = -math.inf;
     if len(cornerMoves) != 0:
          for element in cornerMoves:
              if (compute_utility(play_move(board, color, element[0], element[1]), color) > previousUtility):
-                 previousUtility = compute_utility(play_move(board, color, element[0], element[1]), color)
+                 previousUtility = compute_utility(play_move(board, color, element[0], element[1]), color)                 
                  GLOBAL_MAX_MOVE = (element[0], element[1])
     else:
         for moves in get_possible_moves(board,color):
             boardAfterMove = play_move(board,color,moves[0],moves[1])
-            if(minimax_min_node(boardAfterMove, color) > GLOBAL_MAX):
+            if(minimax_min_node(boardAfterMove, color) > GLOBAL_MAX):                
                 GLOBAL_MAX = minimax_min_node(boardAfterMove,color)
                 GLOBAL_MAX_MOVE = moves
+
+    print("now playing", GLOBAL_MAX_MOVE, file = sys.stderr)
     return GLOBAL_MAX_MOVE
 
 

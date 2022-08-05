@@ -72,12 +72,20 @@ def minimax_max_node(board, color):
 
     
 def select_move_minimax(board, color):
-    """
-    Given a board and a player color, decide on a move. 
-    The return value is a tuple of integers (i,j), where
-    i is the column and j is the row on the board.  
-    """
-    return 0,0
+    move = []
+    previousUtility = 0
+    maxElement = [];
+    cornerMoves = getCornerMoves(board, color)
+    if len(cornerMoves != 0):
+        for element in cornerMoves:
+            if (compute_utility(play_move(board, color, element[0], element[1]), color) > previousUtility):
+                previousUtility = compute_utility(play_move(board, color, element[0], element[1]), color);
+                maxElement = (element[0], element[1])
+        return maxElement;
+    elif (True): #IMPL min node and max nodes
+        return 0,0
+    return 0,0 
+
 
 def getCornerMoves(board, color):
     possibleMoves = get_possible_moves(board, color)

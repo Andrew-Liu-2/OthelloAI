@@ -99,11 +99,11 @@ def getCornerMoves(board, color):
     for element in possibleMoves:
         if (element[0] == 0 and element[1] == 0):
             cornerMoves.append(element)
-        elif (element[0] == 0 and element[1] == 7):
+        elif (element[0] == 0 and element[1] == -1):
             cornerMoves.append(element)
-        elif (element[0] == 7 and element[1] ==7):
+        elif (element[0] == -1 and element[1] == -1):
             cornerMoves.append(element)
-        elif (element[0] == 7 and element[1] == 0):
+        elif (element[0] == -1 and element[1] == 0):
             cornerMoves.append(element) 
     return cornerMoves   
 ############ ALPHA-BETA PRUNING #####################

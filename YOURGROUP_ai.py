@@ -74,12 +74,12 @@ def minimax_max_node(board, color):
 def select_move_minimax(board, color):
     move = []
     previousUtility = 0
-    maxElement = [];
+    maxElement = []
     cornerMoves = getCornerMoves(board, color)
     if len(cornerMoves != 0):
         for element in cornerMoves:
             if (compute_utility(play_move(board, color, element[0], element[1]), color) > previousUtility):
-                previousUtility = compute_utility(play_move(board, color, element[0], element[1]), color);
+                previousUtility = compute_utility(play_move(board, color, element[0], element[1]), color)
                 maxElement = (element[0], element[1])
         return maxElement
     elif (True): #IMPL min node and max nodes

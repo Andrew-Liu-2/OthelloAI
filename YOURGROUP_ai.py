@@ -55,19 +55,20 @@ def minimax_min_node(board, color):
 
 
 def minimax_max_node(board, color):
-    if (len(get_possible_moves(board,color)) == 0):
-        return compute_utility(board)
-    else:
-        possibleMoves = get_possible_moves(board,color)
-        possibleMax = [] 
-        for moves in possibleMoves:
-            boardAfterMove = play_move(board,color,moves[0],moves[1])
-            possibleMax.append(minimax_min_node(boardAfterMove,color))
-        possibleMax.sort()
-        return possibleMax[-1]
+    moves = get_possible_moves(board, color)
+    
+    tuples = []
+    for move in moves:
+        column = move[0]
+        row = move[1]
 
-        
-        
+        boardAfterMove = play_move(board,color,column,row)
+        moveUtility = compute_utility(boardAfterMove,color)
+        tuples.append((moveUtility,move))
+
+    tuples.sort()
+
+    return tuples[-1][1] 
 
     
 def select_move_minimax(board, color):

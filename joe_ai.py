@@ -5,16 +5,17 @@
 An AI player for Othello. This is the template file that you need to  
 complete.
 
-@author: YOUR NAME AND UNI 
+@author: Alberto Pabon UNI: alp2247 
 """
 
-import random
+
 import sys
 import time
 import math
 
 # You can use the functions in othello_shared to write your AI 
 from othello_shared import find_lines, get_possible_moves, get_score, play_move
+
 
 # computes the utility of a final game board state (in the format described above). 
 # The utility is the number of disks of player color minus the number of disks of the opponent. 
@@ -100,11 +101,11 @@ def getCornerMoves(board, color):
     for element in possibleMoves:
         if (element[0] == 0 and element[1] == 0):
             cornerMoves.append(element)
-        elif (element[0] == 0 and element[1] == 3):
+        elif (element[0] == 0 and element[1] == 7):
             cornerMoves.append(element)
-        elif (element[0] == 3 and element[1] == 3):
+        elif (element[0] == 7 and element[1] ==7):
             cornerMoves.append(element)
-        elif (element[0] == 3 and element[1] == 0):
+        elif (element[0] == 7 and element[1] == 0):
             cornerMoves.append(element) 
     return cornerMoves   
 ############ ALPHA-BETA PRUNING #####################

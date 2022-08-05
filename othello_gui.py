@@ -122,6 +122,7 @@ class OthelloGui(object):
                     self.draw_disk(j, i, "black")
                 elif self.game.board[i][j] == 2:
                     self.draw_disk(j, i, "white")
+    
 
 def main():
     

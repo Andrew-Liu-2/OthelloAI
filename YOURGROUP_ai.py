@@ -37,6 +37,7 @@ def compute_utility(board, color):
 
 def minimax_min_node(board, color):
     opp_color = 1 if color == 2 else 2
+    color = opp_color
     if (len(get_possible_moves(board,color)) == 0):
         return compute_utility(board,color)
     else:
@@ -44,7 +45,7 @@ def minimax_min_node(board, color):
         possibleMin = [] 
         for moves in possibleMoves:
             boardAfterMove = play_move(board,color,moves[0],moves[1])
-            possibleMin.append(minimax_max_node(boardAfterMove,opp_color))
+            possibleMin.append(minimax_max_node(boardAfterMove,color))
         possibleMin.sort()
         return possibleMin[0]
 
@@ -58,7 +59,7 @@ def minimax_max_node(board, color):
         possibleMax = [] 
         for moves in possibleMoves:
             boardAfterMove = play_move(board,color,moves[0],moves[1])
-            possibleMax.append(minimax_min_node(boardAfterMove,opp_color))
+            possibleMax.append(minimax_min_node(boardAfterMove,color))
         possibleMax.sort()
         return possibleMax[-1]
 

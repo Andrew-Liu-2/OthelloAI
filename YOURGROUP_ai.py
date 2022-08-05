@@ -23,11 +23,13 @@ from othello_shared import find_lines, get_possible_moves, get_score, play_move
 # 1 is dark 2 is light
 def compute_utility(board, color): 
     utility = 0
+
     if color == 1:
-        utility = get_score(board)[0] - get_score[1]
+        utility = abs(get_score(board)[0] - get_score(board)[1])
     else: 
-        utility = get_score(board)[1] - get_score[0]
+        utility = abs(get_score(board)[1] - get_score(board)[0])
     return utility
+
 
 
 

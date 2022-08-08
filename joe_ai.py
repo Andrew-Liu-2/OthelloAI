@@ -117,18 +117,16 @@ def alphabeta_min_node(board, level, limit, alpha, beta, color):
         return compute_utility(board,color)
     else:
         possibleMoves = get_possible_moves(board,color)
-        possibleMin = [] 
+        minValue = math.inf
         # TODO: add the limitation
-        
         
             
         for moves in possibleMoves:
             boardAfterMove = play_move(board,color,moves[0],moves[1])
-            possibleMin.append(alphabeta_max_node(boardAfterMove, level, limit, alpha,beta, color))
-        possibleMin.sort()
-        if possibleMin[0] < beta:
-            beta = possibleMin[0]
-        return possibleMin[0]
+            minValue = min(minValue,alphabeta_max_node(boardAfterMove, level, limit, alpha,beta, color))
+        if minValue < beta:
+            beta = minValue
+        return minValue
 
 
 #alphabeta_max_node(board, color, alpha, beta, level, limit)
@@ -139,13 +137,12 @@ def alphabeta_max_node(board, level, limit, alpha, beta, color):
         return compute_utility(board,color)
     else:
         possibleMoves = get_possible_moves(board,color)
-        possibleMax = [] 
+        maxValue = -math.inf
         # TODO: add the limitation
         for moves in possibleMoves:
             boardAfterMove = play_move(board,color,moves[0],moves[1])
-            possibleMax.append(alphabeta_min_node(boardAfterMove, level, limit, alpha,beta, color))
-        possibleMax.sort()
-        return possibleMax[-1]
+            maxValue = max(maxValue,alphabeta_min_node(boardAfterMove, level, limit, alpha,beta, color))
+        return maxValue
 
 
 def select_move_alphabeta(board, color): 

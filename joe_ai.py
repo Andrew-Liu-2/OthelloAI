@@ -10,6 +10,7 @@ complete.
 
 import sys
 import math
+import time
 
 # You can use the functions in othello_shared to write your AI 
 from othello_shared import find_lines, get_possible_moves, get_score, play_move
@@ -109,8 +110,12 @@ def getCornerMoves(board, color):
 ############ ALPHA-BETA PRUNING #####################
 
 #alphabeta_min_node(board, color, alpha, beta, level, limit)
-def alphabeta_min_node(board, level, limit, alpha, beta, color): 
-    level += 1
+def alphabeta_min_node(board, level, limit, alpha, beta, color, startTime): 
+    if(time.time() - startTime > 9.9):
+        return compute_utility(board,color)
+    # returns negative inf when max calls min so this case is ignored
+    
+    # level += 1
     opp_color = 1 if color == 2 else 2 #We gotta change this ill explain later
     color = opp_color
     if (len(get_possible_moves(board,color)) == 0) or (level == limit):
@@ -123,7 +128,7 @@ def alphabeta_min_node(board, level, limit, alpha, beta, color):
             
         for moves in possibleMoves:
             boardAfterMove = play_move(board,color,moves[0],moves[1])
-            temp_recursive = alphabeta_max_node(boardAfterMove, level, limit, alpha,beta, color)
+            temp_recursive = alphabeta_max_node(boardAfterMove, level, limit, alpha,beta, color, startTime)
             minValue = min(minValue, temp_recursive)
             
             if temp_recursive < beta:
@@ -135,8 +140,13 @@ def alphabeta_min_node(board, level, limit, alpha, beta, color):
 
 
 #alphabeta_max_node(board, color, alpha, beta, level, limit)
-def alphabeta_max_node(board, level, limit, alpha, beta, color):
-    level += 1
+def alphabeta_max_node(board, level, limit, alpha, beta, color, startTime):
+    if(time.time() - startTime > 9.9):
+        return compute_utility(board,color)
+    # returns inf when min calls max so this case isnt considered
+
+    # level += 1
+
     opp_color = 1 if color == 2 else 2 #We gotta change this ill explain later
     color = opp_color
     if (len(get_possible_moves(board,color)) == 0) or (level == limit):
@@ -147,7 +157,7 @@ def alphabeta_max_node(board, level, limit, alpha, beta, color):
             
         for moves in possibleMoves:
             boardAfterMove = play_move(board,color,moves[0],moves[1])
-            temp_recursive = alphabeta_min_node(boardAfterMove, level, limit, alpha,beta, color)
+            temp_recursive = alphabeta_min_node(boardAfterMove, level, limit, alpha,beta, color, startTime)
             maxValue = max(maxValue, temp_recursive)
             
             if temp_recursive > alpha:
@@ -161,6 +171,7 @@ def alphabeta_max_node(board, level, limit, alpha, beta, color):
 
 
 def select_move_alphabeta(board, color): 
+    startTime = time.time()
     veryBadMoves = [(1, 1), (1, 6), (6, 1), (1,6)]
     badMoves = [(0, 2), (0,7), (1, 0), (6, 0), (7, 1), (7, 6), (1, 7), (6, 8)]
     GLOBAL_MAX = -math.inf
@@ -180,11 +191,11 @@ def select_move_alphabeta(board, color):
         for moves in get_possible_moves(board,color):
             boardAfterMove = play_move(board,color,moves[0],moves[1])
             if moves in veryBadMoves:
-                min_node = alphabeta_min_node(boardAfterMove, level, limit, ALPHA,BETA, color) - 10;
+                min_node = alphabeta_min_node(boardAfterMove, level, limit, ALPHA,BETA, color, startTime) - 10;
             elif moves in badMoves:
-                min_node = alphabeta_min_node(boardAfterMove, level, limit, ALPHA,BETA, color) - 5
+                min_node = alphabeta_min_node(boardAfterMove, level, limit, ALPHA,BETA, color,startTime) - 5
             else :
-                min_node = alphabeta_min_node(boardAfterMove, level, limit, ALPHA,BETA, color)
+                min_node = alphabeta_min_node(boardAfterMove, level, limit, ALPHA,BETA, color,startTime)
             if(min_node > GLOBAL_MAX):                
                 GLOBAL_MAX = min_node
                 GLOBAL_MAX_MOVE = moves

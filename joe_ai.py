@@ -109,17 +109,37 @@ def getCornerMoves(board, color):
 ############ ALPHA-BETA PRUNING #####################
 
 #alphabeta_min_node(board, color, alpha, beta, level, limit)
-def alphabeta_min_node(board, color, alpha, beta): 
+def alphabeta_min_node(board, color, alpha, beta, level, limità): 
     return None
 
 
 #alphabeta_max_node(board, color, alpha, beta, level, limit)
-def alphabeta_max_node(board, color, alpha, beta):
+def alphabeta_max_node(board, color, alpha, beta,level, limit):
     return None
 
 
 def select_move_alphabeta(board, color): 
-    return 0,0 
+    GLOBAL_MAX = -math.inf
+    GLOBAL_MAX_MOVE = (0,0)
+    cornerMoves = getCornerMoves(board, color)
+    previousUtility = -math.inf
+    level = 0
+    limit = 4 #How many moves ahead will the AI think? (A higher value makes better choices but slower time)
+    if len(cornerMoves) != 0:
+         for element in cornerMoves:
+             if (compute_utility(play_move(board, color, element[0], element[1]), color) > previousUtility):
+                 previousUtility = compute_utility(play_move(board, color, element[0], element[1]), color)                 
+                 GLOBAL_MAX_MOVE = (element[0], element[1])
+    else:
+        for moves in get_possible_moves(board,color):
+            boardAfterMove = play_move(board,color,moves[0],moves[1])
+            min_node = minimax_min_node(boardAfterMove, level, limit, color)
+            if(min_node > GLOBAL_MAX):                
+                GLOBAL_MAX = min_node
+                GLOBAL_MAX_MOVE = moves
+
+    print("now playing", GLOBAL_MAX_MOVE, file = sys.stderr)
+    return GLOBAL_MAX_MOVE
 
 
 ####################################################

@@ -123,26 +123,41 @@ def alphabeta_min_node(board, level, limit, alpha, beta, color):
             
         for moves in possibleMoves:
             boardAfterMove = play_move(board,color,moves[0],moves[1])
-            minValue = min(minValue,alphabeta_max_node(boardAfterMove, level, limit, alpha,beta, color))
-        if minValue < beta:
-            beta = minValue
-        return minValue
+            temp_recursive = alphabeta_max_node(boardAfterMove, level, limit, alpha,beta, color)
+            minValue = min(minValue, temp_recursive)
+            
+            if temp_recursive < beta:
+                beta = temp_recursive
+                
+            if alpha > beta:
+                return beta
+        return beta
 
 
 #alphabeta_max_node(board, color, alpha, beta, level, limit)
 def alphabeta_max_node(board, level, limit, alpha, beta, color):
     level += 1
-    opp_color = 1 if color == 2 else 2
+    opp_color = 1 if color == 2 else 2 #We gotta change this ill explain later
+    color = opp_color
     if (len(get_possible_moves(board,color)) == 0) or (level == limit):
         return compute_utility(board,color)
     else:
         possibleMoves = get_possible_moves(board,color)
         maxValue = -math.inf
-        # TODO: add the limitation
+            
         for moves in possibleMoves:
             boardAfterMove = play_move(board,color,moves[0],moves[1])
-            maxValue = max(maxValue,alphabeta_min_node(boardAfterMove, level, limit, alpha,beta, color))
-        return maxValue
+            temp_recursive = alphabeta_min_node(boardAfterMove, level, limit, alpha,beta, color)
+            maxValue = max(maxValue, temp_recursive)
+            
+            if temp_recursive > alpha:
+                alpha = temp_recursive
+                
+            if alpha < beta:
+                return alpha
+        return alpha
+    
+    
 
 
 def select_move_alphabeta(board, color): 
@@ -153,7 +168,7 @@ def select_move_alphabeta(board, color):
     cornerMoves = getCornerMoves(board, color)
     previousUtility = -math.inf
     level = 0
-    limit = 4 #How many moves ahead will the AI think? (A higher value makes better choices but slower time)
+    limit = 5 #How many moves ahead will the AI think? (A higher value makes better choices but slower time)
     if len(cornerMoves) != 0:
          for element in cornerMoves:
              if (compute_utility(play_move(board, color, element[0], element[1]), color) > previousUtility):
@@ -204,7 +219,7 @@ def run_ai():
                                   # 2 : light disk (player 2)
                     
             # Select the move and send it to the manager 
-            movei, movej = select_move_minimax(board, color)
+            movei, movej = select_move_alphabeta(board, color)
             #movei, movej = select_move_alphabeta(board, color)
             print("{} {}".format(movei, movej)) 
 

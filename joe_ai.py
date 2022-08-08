@@ -161,6 +161,8 @@ def alphabeta_max_node(board, level, limit, alpha, beta, color):
 
 
 def select_move_alphabeta(board, color): 
+    veryBadMoves = [(1, 1), (1, 6), (6, 1), (1,6)]
+    badMoves = [(0, 2), (0,7), (1, 0), (6, 0), (7, 1), (7, 6), (1, 7), (6, 8)]
     GLOBAL_MAX = -math.inf
     GLOBAL_MAX_MOVE = (0,0)
     ALPHA = -math.inf
@@ -177,8 +179,12 @@ def select_move_alphabeta(board, color):
     else:
         for moves in get_possible_moves(board,color):
             boardAfterMove = play_move(board,color,moves[0],moves[1])
-            # replace this 
-            min_node = alphabeta_min_node(boardAfterMove, level, limit, ALPHA,BETA, color)
+            if moves in veryBadMoves:
+                min_node = alphabeta_min_node(boardAfterMove, level, limit, ALPHA,BETA, color) - 10;
+            elif moves in badMoves:
+                min_node = alphabeta_min_node(boardAfterMove, level, limit, ALPHA,BETA, color) - 5
+            else :
+                min_node = alphabeta_min_node(boardAfterMove, level, limit, ALPHA,BETA, color)
             if(min_node > GLOBAL_MAX):                
                 GLOBAL_MAX = min_node
                 GLOBAL_MAX_MOVE = moves

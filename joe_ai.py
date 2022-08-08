@@ -109,7 +109,7 @@ def getCornerMoves(board, color):
 ############ ALPHA-BETA PRUNING #####################
 
 #alphabeta_min_node(board, color, alpha, beta, level, limit)
-def alphabeta_min_node(board, color, alpha, beta, level, limit): 
+def alphabeta_min_node(board, level, limit, alpha, beta, color): 
     level += 1
     opp_color = 1 if color == 2 else 2 #We gotta change this ill explain later
     color = opp_color
@@ -119,15 +119,20 @@ def alphabeta_min_node(board, color, alpha, beta, level, limit):
         possibleMoves = get_possible_moves(board,color)
         possibleMin = [] 
         # TODO: add the limitation
+        
+        
+            
         for moves in possibleMoves:
             boardAfterMove = play_move(board,color,moves[0],moves[1])
             possibleMin.append(alphabeta_max_node(boardAfterMove, level, limit, alpha,beta, color))
         possibleMin.sort()
+        if possibleMin[0] < beta:
+            beta = possibleMin[0]
         return possibleMin[0]
 
 
 #alphabeta_max_node(board, color, alpha, beta, level, limit)
-def alphabeta_max_node(board, color, alpha, beta,level, limit):
+def alphabeta_max_node(board, level, limit, alpha, beta, color):
     level += 1
     opp_color = 1 if color == 2 else 2
     if (len(get_possible_moves(board,color)) == 0) or (level == limit):

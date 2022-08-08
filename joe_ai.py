@@ -75,7 +75,7 @@ def select_move_minimax(board, color):
     cornerMoves = getCornerMoves(board, color)
     previousUtility = -math.inf
     level = 0
-    limit = 15 #How many moves ahead will the AI think? (A higher value makes better choices but slower time)
+    limit = 1 #How many moves ahead will the AI think? (A higher value makes better choices but slower time)
     if len(cornerMoves) != 0:
          for element in cornerMoves:
              if (compute_utility(play_move(board, color, element[0], element[1]), color) > previousUtility):

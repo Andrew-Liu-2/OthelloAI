@@ -29,7 +29,7 @@ class Player(object):
 
 class AiPlayerInterface(Player):
 
-    TIMEOUT = 20
+    TIMEOUT = 10
 
     def __init__(self, filename, color):
         self.color = color

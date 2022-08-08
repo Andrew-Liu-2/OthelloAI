@@ -1,5 +1,5 @@
 # SHAPE 2022 - Advanced Computer Science
-## Adversarial Serach / Game Playing
+## Adversarial Search / Game Playing
 
 ### Introduction
 

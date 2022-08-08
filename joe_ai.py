@@ -189,7 +189,7 @@ def select_move_alphabeta(board, color):
                 GLOBAL_MAX = min_node
                 GLOBAL_MAX_MOVE = moves
 
-    print("now playing", GLOBAL_MAX_MOVE, file = sys.stderr)
+    print("Joe_AI played", GLOBAL_MAX_MOVE, file = sys.stderr)
     return GLOBAL_MAX_MOVE
 
 

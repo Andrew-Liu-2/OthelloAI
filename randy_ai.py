@@ -28,7 +28,7 @@ def select_move(board, color):
     moves = get_possible_moves(board, color) # returns a list of (column, row) tuples.
     i,j = random.choice(moves)
 
-    print("Playing",i,",",j, file = sys.stderr)
+    print("Randy played",i,",",j, file = sys.stderr)
 
     time.sleep(0.1) # Delay, so Randy doesn't look as simple as he really is.  
     return i,j 

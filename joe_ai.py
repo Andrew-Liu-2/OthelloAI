@@ -75,7 +75,7 @@ def select_move_minimax(board, color):
     cornerMoves = getCornerMoves(board, color)
     previousUtility = -math.inf
     level = 0
-    limit = 4 #How many moves ahead will the AI think? (A higher value makes better choices but slower time)
+    limit = 15 #How many moves ahead will the AI think? (A higher value makes better choices but slower time)
     if len(cornerMoves) != 0:
          for element in cornerMoves:
              if (compute_utility(play_move(board, color, element[0], element[1]), color) > previousUtility):
@@ -99,11 +99,11 @@ def getCornerMoves(board, color):
     for element in possibleMoves:
         if (element[0] == 0 and element[1] == 0):
             cornerMoves.append(element)
-        elif (element[0] == 0 and element[1] == -1):
+        elif (element[0] == 0 and element[1] == 7):
             cornerMoves.append(element)
-        elif (element[0] == -1 and element[1] == -1):
+        elif (element[0] == 7 and element[1] == 7):
             cornerMoves.append(element)
-        elif (element[0] == -1 and element[1] == 0):
+        elif (element[0] == 7 and element[1] == 0):
             cornerMoves.append(element) 
     return cornerMoves   
 ############ ALPHA-BETA PRUNING #####################
@@ -170,7 +170,7 @@ def select_move_alphabeta(board, color):
     cornerMoves = getCornerMoves(board, color)
     previousUtility = -math.inf
     level = 0
-    limit = 5 #How many moves ahead will the AI think? (A higher value makes better choices but slower time)
+    limit = 4 #How many moves ahead will the AI think? (A higher value makes better choices but slower time)
     if len(cornerMoves) != 0:
          for element in cornerMoves:
              if (compute_utility(play_move(board, color, element[0], element[1]), color) > previousUtility):

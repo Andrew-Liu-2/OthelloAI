@@ -121,7 +121,7 @@ def alphabeta_min_node(board, color, alpha, beta, level, limit):
         # TODO: add the limitation
         for moves in possibleMoves:
             boardAfterMove = play_move(board,color,moves[0],moves[1])
-            possibleMin.append(alphabeta_max_node(boardAfterMove, level, limit, color))
+            possibleMin.append(alphabeta_max_node(boardAfterMove, level, limit, alpha,beta, color))
         possibleMin.sort()
         return possibleMin[0]
 
@@ -138,7 +138,7 @@ def alphabeta_max_node(board, color, alpha, beta,level, limit):
         # TODO: add the limitation
         for moves in possibleMoves:
             boardAfterMove = play_move(board,color,moves[0],moves[1])
-            possibleMax.append(alphabeta_min_node(boardAfterMove, level, limit, color))
+            possibleMax.append(alphabeta_min_node(boardAfterMove, level, limit, alpha,beta, color))
         possibleMax.sort()
         return possibleMax[-1]
 
@@ -146,6 +146,8 @@ def alphabeta_max_node(board, color, alpha, beta,level, limit):
 def select_move_alphabeta(board, color): 
     GLOBAL_MAX = -math.inf
     GLOBAL_MAX_MOVE = (0,0)
+    ALPHA = -math.inf
+    BETA = math.inf
     cornerMoves = getCornerMoves(board, color)
     previousUtility = -math.inf
     level = 0
@@ -159,7 +161,7 @@ def select_move_alphabeta(board, color):
         for moves in get_possible_moves(board,color):
             boardAfterMove = play_move(board,color,moves[0],moves[1])
             # replace this 
-            min_node = minimax_min_node(boardAfterMove, level, limit, color)
+            min_node = alphabeta_min_node(boardAfterMove, level, limit, ALPHA,BETA, color)
             if(min_node > GLOBAL_MAX):                
                 GLOBAL_MAX = min_node
                 GLOBAL_MAX_MOVE = moves

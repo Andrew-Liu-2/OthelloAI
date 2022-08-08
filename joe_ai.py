@@ -5,7 +5,7 @@
 An AI player for Othello. This is the template file that you need to  
 complete.
 
-@author: Alberto Pabon UNI: alp2247 
+@author: Alberto Pabon UNI: alp2247
 @author: Andrew Liu UNI: al4258
 @author: Haocheng (Matt) Zhu UNI: hz2859
 """

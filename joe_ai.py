@@ -111,14 +111,12 @@ def getCornerMoves(board, color):
 
 #alphabeta_min_node(board, color, alpha, beta, level, limit)
 def alphabeta_min_node(board, level, limit, alpha, beta, color, startTime): 
-    if(time.time() - startTime > 9.9):
-        return compute_utility(board,color)
-    # returns negative inf when max calls min so this case is ignored
-    
-    # level += 1
+    level += 1
+
     opp_color = 1 if color == 2 else 2 #We gotta change this ill explain later
     color = opp_color
-    if (len(get_possible_moves(board,color)) == 0) or (level == limit):
+    if (len(get_possible_moves(board,color)) == 0 or time.time() - startTime > 9.8):
+        #print("Reached level " + str(level))
         return compute_utility(board,color)
     else:
         possibleMoves = get_possible_moves(board,color)
@@ -141,15 +139,12 @@ def alphabeta_min_node(board, level, limit, alpha, beta, color, startTime):
 
 #alphabeta_max_node(board, color, alpha, beta, level, limit)
 def alphabeta_max_node(board, level, limit, alpha, beta, color, startTime):
-    if(time.time() - startTime > 9.9):
-        return compute_utility(board,color)
-    # returns inf when min calls max so this case isnt considered
-
-    # level += 1
+    level += 1
 
     opp_color = 1 if color == 2 else 2 #We gotta change this ill explain later
     color = opp_color
-    if (len(get_possible_moves(board,color)) == 0) or (level == limit):
+    if (len(get_possible_moves(board,color)) == 0) or time.time() - startTime > 9.8:
+        #print("Reached level " + str(level))
         return compute_utility(board,color)
     else:
         possibleMoves = get_possible_moves(board,color)

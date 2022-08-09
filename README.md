@@ -3,7 +3,7 @@
 
 ### Introduction
 
-In this project you will implement an AI player for the game Othello, also known as Reversi. For the rules of this game see here: [https://en.wikipedia.org/wiki/Reversi](https://en.wikipedia.org/wiki/Reversi). Our version of the game differs from these rules in one minor point: The game ends as soon as one of the players has no legal moves left.
+In this project we implemented an AI player for the game Othello, also known as Reversi. For the rules of this game see here: [https://en.wikipedia.org/wiki/Reversi](https://en.wikipedia.org/wiki/Reversi). Our version of the game differs from these rules in one minor point: The game ends as soon as one of the players has no legal moves left.
 
 The project consists of the following 5 files: 
 
